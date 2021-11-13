@@ -15,6 +15,6 @@ MonoBehaviour:
   title: UMD VRLab Room
   author: Brendan R
   description: 
-  version: 3
+  version: 4
   outputFolder: build
   previewImage: {fileID: 0}
