@@ -4,13 +4,13 @@ using System;
 using System.Reflection;
 
 
-public class ExampleGameplayRoom : MonoBehaviour
+public class VRLabGameplayRoom : MonoBehaviour
 {
     public Light roomLight;
     public KMAudio Sound;
     public KMGameplayRoom gameplayRoom;
 
-	void Awake()
+    void Awake()
     {
         gameplayRoom = GetComponent<KMGameplayRoom>();
         Sound = GetComponent<KMAudio>();
@@ -18,29 +18,37 @@ public class ExampleGameplayRoom : MonoBehaviour
         Debug.Log("Setting on light change");
         gameplayRoom.OnLightChange = OnLightChange;
 
-	}
+    }
 
     public void OnLightChange(bool on)
     {
         ticks++;
-        if(ticks == 1) //before the lights come on
+        if (ticks == 1) //before the lights come on
         {
-            LightsOut();
+            LightsOut(false);
         }
-        if(ticks == 2) //lights initally come on
+        if (ticks == 2) //lights initally come on
         {
-            LightsOn();
+            LightsOn(true);
         }
-        if(ticks == 3) //lights go out and reset to state 1 (before lights ever came on)
+        if (ticks == 3) //lights go out and reset to state 1 (before lights ever came on)
         {
-            LightsOut();
-            ticks = 1;
+            LightsOut(true);
         }
-        
+        if (ticks == 4) //lights come back on
+        {
+            LightsOn(true);
+        }
+        if(ticks == 5) //one minute event begins
+        {
+            OneMinuteEvent();
+        }
+
     }
 
     public void OneMinuteEvent()
     {
+        SetAmbient(new Color(.2f, .2f, .2f));
         StartCoroutine(RedLight());
     }
 
@@ -49,7 +57,7 @@ public class ExampleGameplayRoom : MonoBehaviour
         while (true)
         {
             roomLight.GetComponent<Light>().color = new Color(1f, .2f, .2f);
-            Sound.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.EmergencyAlarm, gameplayRoom.BombSpawnPosition);
+            Sound.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.EmergencyAlarm, roomLight.transform);
             yield return new WaitForSeconds(1);
             roomLight.GetComponent<Light>().color = new Color(.5f, .5f, .5f);
             yield return new WaitForSeconds(1.25f);
@@ -67,19 +75,24 @@ public class ExampleGameplayRoom : MonoBehaviour
 
     }
 
-    private void LightsOn()
+    private void LightsOn(bool audio)
     {
         SetAmbient(new Color(.5f, .5f, .5f));
         roomLight.color = new Color(.5f, .5f, .5f);
-        Sound.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.EmergencyAlarm, gameplayRoom.BombSpawnPosition);
-
+        if(audio)
+        {
+            Sound.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.LightBuzzShort, roomLight.transform);
+        }
     }
 
-    private void LightsOut()
+    private void LightsOut(bool audio)
     {
         SetAmbient(new Color(.2f, .2f, .2f));
         roomLight.color = new Color(0, 0, 0);
-        Sound.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.EmergencyAlarm, gameplayRoom.BombSpawnPosition);
+        if(audio)
+        {
+            Sound.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.LightBuzz, roomLight.transform);
+        }
     }
 
     private int ticks = 0;
