@@ -11,10 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 615501dbe4f3fe94fbf4b564abb10237, type: 3}
   m_Name: ModConfig
   m_EditorClassIdentifier: 
-  id: UMDVR6
-  title: UMD VRLab Room
-  author: Brendan R
+  id: UMDVRLAB
+  title: A gameplay room of the UMD XR Laboratory
+  author: Brendan Rood
   description: 
-  version: 5
+  version: 7
   outputFolder: build
-  previewImage: {fileID: 0}
+  previewImage: {fileID: 2800000, guid: 91473c085f4a3df46a9977c7b6525e7a, type: 3}

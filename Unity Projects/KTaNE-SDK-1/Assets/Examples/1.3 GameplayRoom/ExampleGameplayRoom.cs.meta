@@ -1,10 +1,11 @@
 fileFormatVersion: 2
 guid: 44fb267e79b16ac4ebb76243f134ca14
-timeCreated: 1465159778
-licenseType: Pro
 MonoImporter:
+  externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - roomLight: {fileID: 108791220607550336, guid: aad23ae3a2c3b5649bb608596d754b82,
+      type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
